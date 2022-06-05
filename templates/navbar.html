@@ -1,0 +1,62 @@
+{% load static %}
+
+<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-primary">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+        data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="{% url 'home'  %}">
+        Anthony HAROLD's Blog</a>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                {% comment %} {% url 'students' %} {% endcomment %}
+                <a class="nav-link" href="">Home</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="">About</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            {% if request.user.is_authenticated %} {% if request.user.is_superuser %}
+
+            <li class="nav-item active">
+                <a class="nav-link" href="/admin">Admin</a>
+            </li>
+            <li class="nav-item active">
+                
+                <a class="nav-link" href="{% url 'user_logout' %}">Log Out</a>
+            </li>
+            
+             {% else %}   
+            <li class="nav-item active">
+                
+                <a class="nav-link" href="{% url 'user_logout' %}">Log Out</a>
+            </li>
+            <li class="nav-item active">
+                
+                <a class="nav-link" href="{% url 'user_profile' %}">Profile</a>
+            </li>
+            <li class="nav-item active">
+                
+                <a class="nav-link" href="{% url 'blog_add' %}">New Post</a>
+            </li>
+            {% endif %}
+            {% else %}
+
+            <li class="nav-item active">
+                {% comment %} {% url 'user_login' %} {% endcomment %}
+                <a class="nav-link" href="{% url 'user_login' %}">Log In</a>
+            </li>
+            <li class="nav-item active">
+                {% comment %} {% url 'register' %} {% endcomment %}
+                <a class="nav-link" href="{% url 'register' %} ">Register</a>
+            </li>
+            {% endif %}
+            
+        </ul>
+    </div>
+</nav>
