@@ -51,6 +51,7 @@ def user_login(request):
 @login_required
 def user_profile(request):
     user = User.objects.get(username=request.user)
+    profile = UserProfile.objects.get(user=user)
     form_user = UserForm(instance=user)
     form_profile = UserProfileForm(instance=user.userprofile)
     if request.method == 'POST':
@@ -64,7 +65,8 @@ def user_profile(request):
             return redirect('home')
     context = {
         'form_user': form_user,
-        'form_profile': form_profile
+        'form_profile': form_profile,
+        'profile': profile
     }
     return render(request, 'users/profile.html',context)
 

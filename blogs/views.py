@@ -53,7 +53,7 @@ class BlogUpdateView(UpdateView):
     template_name = "blogs/blog_update.html"
     success_url = reverse_lazy('home')
 
-@login_required
+@login_required(login_url='users/login')
 def blog_like(request, id):
     blog = Blog.objects.get(id=id)
     like = Like.objects.get_or_create(user=request.user, blog=blog)
