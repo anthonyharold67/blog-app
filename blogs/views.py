@@ -59,6 +59,7 @@ def blog_like(request, id):
     like = Like.objects.get_or_create(user=request.user, blog=blog)
 
     blog.blog_like += 1
+    blog.blog_view -= 1
     blog.save()
     return redirect("blog_detail", id=id)
     
