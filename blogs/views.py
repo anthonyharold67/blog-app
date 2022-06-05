@@ -5,7 +5,10 @@ from django.views.generic import ListView, UpdateView, DeleteView
 
 from .forms import BlogForm, CommentForm
 from .models import Blog, Like,Comment
+from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+
+
 
 # Create your views here.
 
@@ -37,14 +40,13 @@ class BlogListView(ListView):
 # class BlogDetailView(DetailView):
 #     model = Blog
 
-
-@login_required
+@method_decorator(login_required, name='dispatch')
 class BlogDeleteView(DeleteView):
     model = Blog 
     template_name = "blogs/blog_delete.html"
     success_url = reverse_lazy('home')
 
-@login_required
+@method_decorator(login_required, name='dispatch')
 class BlogUpdateView(UpdateView):
     model = Blog
     form_class = BlogForm
