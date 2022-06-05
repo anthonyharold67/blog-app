@@ -7,6 +7,7 @@ from .forms import UserForm, UserProfileForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from .models import UserProfile
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
@@ -47,6 +48,7 @@ def user_login(request):
     return render(request, 'users/login.html', {'form': form})    
     #contexti burada da oluşturabilirz
 
+@login_required
 def user_profile(request):
     user = User.objects.get(username=request.user)
     form_user = UserForm(instance=user)
@@ -64,6 +66,7 @@ def user_profile(request):
         'form_profile': form_profile
     }
     return render(request, 'users/profile.html',context)
+
 
 def user_logout(request):
     messages.success(request,"You have been logged out")

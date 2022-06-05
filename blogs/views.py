@@ -1,10 +1,11 @@
 
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, UpdateView, DeleteView
 
 from .forms import BlogForm, CommentForm
 from .models import Blog, Like,Comment
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -14,6 +15,7 @@ from .models import Blog, Like,Comment
 #     template_name = 'blogs/blog_create.html'
 #     success_url = reverse_lazy('home')
 
+@login_required
 def blog_create(request):
     form = BlogForm()
     if request.method == 'POST':
@@ -36,20 +38,20 @@ class BlogListView(ListView):
 #     model = Blog
 
 
-
+@login_required
 class BlogDeleteView(DeleteView):
     model = Blog 
     template_name = "blogs/blog_delete.html"
     success_url = reverse_lazy('home')
 
-
+@login_required
 class BlogUpdateView(UpdateView):
     model = Blog
     form_class = BlogForm
     template_name = "blogs/blog_update.html"
     success_url = reverse_lazy('home')
 
-
+@login_required
 def blog_like(request, id):
     blog = Blog.objects.get(id=id)
     like = Like.objects.get_or_create(user=request.user, blog=blog)
@@ -59,9 +61,7 @@ def blog_like(request, id):
     return redirect("blog_detail", id=id)
     
 
-#     blog.save()
-#     return render(request, 'blogs/blog_detail.html', {'blog': blog})
-
+@login_required
 def blog_detail(request, id):
     blog = Blog.objects.get(id=id)
     comment_form = CommentForm()
@@ -81,8 +81,5 @@ def blog_detail(request, id):
     return render(request, 'blogs/blog_detail.html', {'blog': blog, 'comment_form': comment_form, 'comments': comments})
 
 
-# def blog_comment(request, pk):
-#     blog = Comment.objects.get(pk=pk)
-#     blog.blog_view += 1
 
     
