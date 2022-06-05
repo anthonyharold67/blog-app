@@ -78,7 +78,7 @@ def blog_detail(request, id):
             comment.post = blog
             blog.blog_comment +=1 
             comment.user = request.user
-            blog.blog_view -= 1
+            blog.blog_view -= 2
             blog.save()
             comment.save()
             return redirect("blog_detail", id)
