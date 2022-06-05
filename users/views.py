@@ -59,6 +59,7 @@ def user_profile(request):
         if form_user.is_valid():
             form_user.save()
             form_profile.save()
+            login(request,user)
             messages.success(request,"You have been updated")   
             return redirect('home')
     context = {
